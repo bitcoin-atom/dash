@@ -211,6 +211,13 @@ extern UniValue estimatepriority(const UniValue& params, bool fHelp);
 extern UniValue estimatesmartfee(const UniValue& params, bool fHelp);
 extern UniValue estimatesmartpriority(const UniValue& params, bool fHelp);
 
+extern UniValue initiateswap(const UniValue& params, bool fHelp);
+extern UniValue auditswap(const UniValue& params, bool fHelp);
+extern UniValue participateswap(const UniValue& params, bool fHelp);
+extern UniValue redeemswap(const UniValue& params, bool fHelp);
+extern UniValue extractsecret(const UniValue& params, bool fHelp);
+extern UniValue refundswap(const UniValue& params, bool fHelp);
+
 extern UniValue instantsendtoaddress(const UniValue& params, bool fHelp);
 extern UniValue keepass(const UniValue& params, bool fHelp);
 extern UniValue getnewaddress(const UniValue& params, bool fHelp); // in rpcwallet.cpp

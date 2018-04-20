@@ -33,6 +33,20 @@ bool TransactionSignatureCreator::CreateSig(std::vector<unsigned char>& vchSig, 
     return true;
 }
 
+bool TransactionSignatureCreator::CreateSig(std::vector<unsigned char>& vchSig, const CKeyID& address, CPubKey& pubkey, const CScript& scriptCode) const
+{
+    CKey key;
+    if (!keystore->GetKey(address, key))
+        return false;
+
+    uint256 hash = SignatureHash(scriptCode, *txTo, nIn, nHashType);
+    if (!key.Sign(hash, vchSig))
+        return false;
+    vchSig.push_back((unsigned char)nHashType);
+    pubkey = key.GetPubKey();
+    return true;
+}
+
 static bool Sign1(const CKeyID& address, const BaseSignatureCreator& creator, const CScript& scriptCode, CScript& scriptSigRet)
 {
     vector<unsigned char> vchSig;

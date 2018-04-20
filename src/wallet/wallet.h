@@ -69,6 +69,7 @@ static const bool DEFAULT_WALLETBROADCAST = true;
 //! if set, all keys will be derived by using BIP39/BIP44
 static const bool DEFAULT_USE_HD_WALLET = false;
 
+class CBitcoinAddress;
 class CBlockIndex;
 class CCoinControl;
 class COutput;
@@ -1092,5 +1093,7 @@ public:
         READWRITE(vchPubKey);
     }
 };
+
+CBitcoinAddress GetRawChangeAddress(CWallet * const pwallet);
 
 #endif // BITCOIN_WALLET_WALLET_H

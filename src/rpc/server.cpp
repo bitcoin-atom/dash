@@ -276,6 +276,14 @@ static const CRPCCommand vRPCCommands[] =
     { "network",            "clearbanned",            &clearbanned,            true  },
     { "network",            "setnetworkactive",       &setnetworkactive,       true  },
 
+    /* Atomic swaps */
+    { "atomicswaps",        "initiateswap",           &initiateswap,           true  },
+    { "atomicswaps",        "auditswap",              &auditswap,              true  },
+    { "atomicswaps",        "participateswap",        &participateswap,        true  },
+    { "atomicswaps",        "redeemswap",             &redeemswap,             true  },
+    { "atomicswaps",        "refundswap",             &refundswap,             true  },
+    { "atomicswaps",        "extractsecret",          &extractsecret,          true  },
+
     /* Block chain and UTXO */
     { "blockchain",         "getblockchaininfo",      &getblockchaininfo,      true  },
     { "blockchain",         "getbestblockhash",       &getbestblockhash,       true  },

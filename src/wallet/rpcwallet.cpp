@@ -39,6 +39,20 @@ std::string HelpRequiringPassphrase()
         : "";
 }
 
+CBitcoinAddress GetRawChangeAddress(CWallet * const pwallet)
+{
+    CReserveKey reservekey(pwallet);
+    CPubKey vchPubKey;
+    if (!reservekey.GetReservedKey(vchPubKey, true))
+        throw JSONRPCError(RPC_WALLET_KEYPOOL_RAN_OUT, "Error: Keypool ran out, please call keypoolrefill first");
+
+    reservekey.KeepKey();
+
+    CKeyID keyID = vchPubKey.GetID();
+
+    return CBitcoinAddress(keyID);
+}
+
 bool EnsureWalletIsAvailable(bool avoidException)
 {
     if (!pwalletMain)
@@ -220,7 +234,6 @@ UniValue getaccountaddress(const UniValue& params, bool fHelp)
     return ret;
 }
 
-
 UniValue getrawchangeaddress(const UniValue& params, bool fHelp)
 {
     if (!EnsureWalletIsAvailable(fHelp))
@@ -243,16 +256,7 @@ UniValue getrawchangeaddress(const UniValue& params, bool fHelp)
     if (!pwalletMain->IsLocked(true))
         pwalletMain->TopUpKeyPool();
 
-    CReserveKey reservekey(pwalletMain);
-    CPubKey vchPubKey;
-    if (!reservekey.GetReservedKey(vchPubKey, true))
-        throw JSONRPCError(RPC_WALLET_KEYPOOL_RAN_OUT, "Error: Keypool ran out, please call keypoolrefill first");
-
-    reservekey.KeepKey();
-
-    CKeyID keyID = vchPubKey.GetID();
-
-    return CBitcoinAddress(keyID).ToString();
+    return GetRawChangeAddress(pwalletMain).ToString();
 }
 
 

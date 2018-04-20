@@ -41,6 +41,14 @@ public:
     TransactionSignatureCreator(const CKeyStore* keystoreIn, const CTransaction* txToIn, unsigned int nInIn, int nHashTypeIn=SIGHASH_ALL);
     const BaseSignatureChecker& Checker() const { return checker; }
     bool CreateSig(std::vector<unsigned char>& vchSig, const CKeyID& keyid, const CScript& scriptCode) const;
+    bool CreateSig(std::vector<unsigned char>& vchSig, const CKeyID& address, CPubKey& pubkey, const CScript& scriptCode) const;
+};
+
+class MutableTransactionSignatureCreator : public TransactionSignatureCreator {
+    CTransaction tx;
+
+public:
+    MutableTransactionSignatureCreator(const CKeyStore* keystoreIn, const CMutableTransaction* txToIn, unsigned int nInIn, int nHashTypeIn) : TransactionSignatureCreator(keystoreIn, &tx, nInIn, nHashTypeIn), tx(*txToIn) {}
 };
 
 /** A signature creator that just produces 72-byte empty signatyres. */
